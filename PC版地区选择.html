@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="./css/pickarea.css">
+</head>
+<body>
+	<div>
+		<label style="float: left;">选择地址</label>
+		<div class="pickarea" id="pickarea" data='{"provincecode":130000,"citycode":130200,"areacode":130203}' style="float: left;">
+			<input name="areaname">
+		</div>
+	</div>
+	<div style="clear: both;height: 50px;"></div>
+	<div>
+		<div class="pickarea" id="pickarea2">
+			<input name="areaname">
+		</div>
+	</div>
+	<button id="button">提交</button>
+	<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+	<script src="./js/pickarea.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$("#pickarea").pickarea();
+			$("#pickarea2").pickarea();
+			$("#button").click(function(){
+				console.log($("#pickarea").pickarea('getdata'));
+			})
+			
+		})
+		
+	</script>
+</body>
+</html>
