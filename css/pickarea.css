@@ -1,0 +1,7 @@
+ul,body,li,p,div{margin:0;padding: 0;font-family: "微软雅黑";}
+li{list-style: none;}
+.pickbody{height:200px;width: 273px;display: none;position: absolute;box-shadow: 0 0 1px #ccc;border:1px solid #ccc;}
+.pickbody ul{width: 90px;float: left;font-size: 14px;background-color: #fff;height:200px;overflow: auto;background-color: #f6f6f6;border-right: 1px solid #ccc}
+.pickbody ul li{line-height: 25px;padding-left: 5px;padding-right: 5px;height: 25px;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;background-color: #fff;}
+.pickbody ul li.active{background-color: #83BC0D;color:#fff;}
+.pickbody ul:last-child{border-right: none;}
