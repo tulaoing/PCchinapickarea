@@ -14084,7 +14084,6 @@ var areadata = [{
 $.fn.pickarea = function(options) {
 	var self=this;
 	var elem_id=$(this).attr('id');
-	console.log(elem_id);
 	if(options=='getdata'){
 		var json={
 			province:{
@@ -14110,17 +14109,26 @@ $.fn.pickarea = function(options) {
 	var cityul=$("#container_"+elem_id).find('.city');
 	var areaul=$("#container_"+elem_id).find('.area');
 
+	var provinceindex=-1,cityindex=-1,areaindex=-1;
+
 	
 	if($(this).attr('data')){
 		var datajson=JSON.parse($(this).attr('data'));
 		loadprovince(datajson.provincecode);
-		loadcity(datajson.provincecode,datajson.citycode);
-		loadarea(datajson.citycode,datajson.areacode);
-		var provincename=$(provinceul).find('.active').text();
-		var cityname=$(cityul).find('.active').text();
-		var areaname=$(areaul).find('.active').text();
-		var name=provincename+"/"+cityname+"/"+areaname;
-		$(input).val(name);
+		if(provinceindex!=-1){
+			loadcity(datajson.provincecode,datajson.citycode);
+		}
+		if(cityindex!=-1){
+			loadarea(datajson.citycode,datajson.areacode);
+		}
+		if(areaindex!=-1){
+			var provincename=$(provinceul).find('.active').text();
+			var cityname=$(cityul).find('.active').text();
+			var areaname=$(areaul).find('.active').text();
+			var name=provincename+"/"+cityname+"/"+areaname;
+			$(input).val(name);
+		}
+		
 	}else{
 		loadprovince();
 	}
@@ -14136,12 +14144,21 @@ $.fn.pickarea = function(options) {
 			str=onestr+str;
 		}
 		$(provinceul).html(str);
+		provinceindex=$(provinceul).find('.active').index();
+		
 	}
 	
 	$(input).click(function(){
 		event.stopPropagation();
 		show();
-		$(bodybox).slideDown();
+		$(bodybox).slideDown(function(){
+			console.log(provinceindex);
+			console.log(cityindex);
+			console.log(cityindex);
+			$(provinceul).scrollTop((provinceindex-6)*25);
+			$(cityul).scrollTop((cityindex-6)*25);
+			$(areaul).scrollTop((areaindex-6)*25);
+		});
 	})
 	
 	$(provinceul).find("li").click(function(){
@@ -14186,6 +14203,8 @@ $.fn.pickarea = function(options) {
 		}
 		$(cityul).html(str);
 		$(areaul).html('');
+		cityindex=$(cityul).find('.active').index();
+
 	}
 	function loadarea(parentcode,selfcode){
 		var str='';
@@ -14193,6 +14212,7 @@ $.fn.pickarea = function(options) {
 			if (areadata[i].parentId==parentcode) {
 				if(areadata[i].code==selfcode){
 					var onestr="<li value="+areadata[i].code+" class='active'>"+areadata[i].name+"</li>";
+					areaindex=i;
 				}else{
 					var onestr="<li value="+areadata[i].code+">"+areadata[i].name+"</li>";
 				}
@@ -14200,16 +14220,13 @@ $.fn.pickarea = function(options) {
 			}
 		}
 		$(areaul).html(str);
+		areaindex=$(areaul).find('.active').index();
 	}
 	function show(){
 		var height=$(self).height();
-		console.log(self);
 		var top = $(self).offset().top;
 		var left = $(self).offset().left;
 		var screenwidth=$(window).width();
-		console.log(top);
-		console.log(left);
-		console.log(screenwidth);
 		$(bodybox).css("top",top+height);
 		
 		if(screenwidth-left<280){
