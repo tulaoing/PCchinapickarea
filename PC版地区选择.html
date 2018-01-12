@@ -4,22 +4,31 @@
 	<meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="./css/pickarea.css">
 </head>
 <body>
-	<div>
-		<label style="float: left;">选择地址</label>
-		<div class="pickarea" id="pickarea" data='{"provincecode":130000,"citycode":130200,"areacode":130203}' style="float: left;">
-			<input name="areaname">
+	<div style="margin: 50px auto;width: 300px;">
+		<p>自带默认值</p>
+		<div class="form-group">
+			<label style="float: left;">选择地址</label>
+			<div class="pickarea" id="pickarea" data='{"provincecode":130000,"citycode":130200,"areacode":130203}'>
+				<input name="areaname" class="form-control">
+			</div>
+		</div>
+		<div style="clear: both;height: 20px;"></div>
+		<p>无默认值</p>
+		<div  class="form-group">
+			<div class="pickarea" id="pickarea2">
+				<input name="areaname" class="form-control">
+			</div>
+		</div>
+		<button id="button" class="btn btn-default">提交</button>
+		<div>
+			<p>提交显示结果：<span id="result"></span></p>
 		</div>
 	</div>
-	<div style="clear: both;height: 50px;"></div>
-	<div>
-		<div class="pickarea" id="pickarea2">
-			<input name="areaname">
-		</div>
-	</div>
-	<button id="button">提交</button>
 	<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
 	<script src="./js/pickarea.js"></script>
 	<script type="text/javascript">
@@ -27,7 +36,8 @@
 			$("#pickarea").pickarea();
 			$("#pickarea2").pickarea();
 			$("#button").click(function(){
-				console.log($("#pickarea").pickarea('getdata'));//获得选择地区对象方法
+				//$("#pickarea").pickarea('getdata')//获得选择地区对象方法
+				$("#result").html(JSON.stringify($("#pickarea").pickarea('getdata')));
 			})
 			
 		})
